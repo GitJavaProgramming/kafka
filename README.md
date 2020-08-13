@@ -6,7 +6,7 @@
 # 生产者
     向Kafka服务端写入数据
 ## 涉及到的组件
-    生产者     KafkaProducer（客户端） 
+    生产者     KafkaProducer（客户端--线程安全的） 
     拦截器     ProducerInterceptors&ProducerInterceptor
     元数据     Metadata
                 Cluster
@@ -27,6 +27,23 @@
                     ......
                     
     消息格式参考：https://kafka.apachecn.org/documentation.html#messageformat
+## 流程图
+# 消费者
+    从kafka服务端拉取消息，保证业务逻辑与消息消费的一致性
+## 涉及到的组件
+    消费者          KafkaConsumer(非线程安全的--订阅、消费)
+    消息拉取器      Fetcher
+                        请求响应协议 FetchRequest & FetchResponse
+    订阅状态        SubscriptionState
+                        SubscriptionType 订阅Topic的模式
+                        TopicparitionState TopicParition的消费状态
+    分区分配器      PartitionAssignor(2.4弃用 自定义分配器使用org.apache.kafka.clients.consumer.ConsumerPartitionAssignor)
+    消费协调者      ConsumerCoordinator(消费者变动以及服务端最近的offset)
+                        再均衡 Rebalance
+    网络处理        ConsumerNetworkClient(心跳任务、网络IO)
+                        心跳检测 Heartbeat
+                        请求处理器 *Handler
+                        监听器 RequestFuture
        
 # 参考资料
 * Apache Kafka源码剖析
