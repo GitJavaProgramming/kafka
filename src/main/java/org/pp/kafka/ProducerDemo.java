@@ -1,5 +1,6 @@
 package org.pp.kafka;
 
+import lombok.SneakyThrows;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -9,10 +10,11 @@ import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
 public class ProducerDemo {
+    @SneakyThrows
     public static void main(String[] args) {
         boolean isAsync = (args.length == 0 || !args[0].trim().equalsIgnoreCase("sync"));
         Properties props = new Properties();
-        props.put("bootstrap.servers", "192.168.1.131:9092");
+        props.put("bootstrap.servers", "192.168.1.132:9092");
         props.put("client.id", "ProducerDemo");
         props.put("key.serializer", "org.apache.kafka.common.serialization.IntegerSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
@@ -33,6 +35,7 @@ public class ProducerDemo {
                 }
             }
             ++messageNo;
+            Thread.sleep(1000);
         }
     }
 

@@ -1,6 +1,15 @@
 # 准备kafka
     启动zookeeper -- zkServer.sh start
     启动kafka MQ  -- bin/kafka-server-start.sh config/server.properties
+    
+    本地虚拟机测试：
+        vi server.properties
+        去掉下面两行注释
+        listeners=PLAINTEXT://:9092
+        advertised.listeners=PLAINTEXT://host:9092(虚拟机ip--192.168.1.132)
+    
+    Kafka tool 连接并查看topic partition offset
+    
 # 核心概念
     https://www.cnblogs.com/judesheng/p/10621682.html
 # 生产者
@@ -44,7 +53,8 @@
                         心跳检测 Heartbeat
                         请求处理器 *Handler
                         监听器 RequestFuture
-       
+# spring-kafka
+    https://spring.io/projects/spring-kafka
 # 参考资料
 * Apache Kafka源码剖析
 * Kafka源码解析与实战   
